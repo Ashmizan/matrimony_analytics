@@ -1,7 +1,6 @@
 MATRIMONY ANALYTICS PLATFORM
 03 | BUSINESS ANALYSIS
-===============================================================================
-
+    
 Objective
 ---------
 Translating a 500,000-user application dataset into actionable business
