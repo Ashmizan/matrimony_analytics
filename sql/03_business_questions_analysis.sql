@@ -167,3 +167,151 @@ Approximately 72% of users are verified, indicating that verification covers
 a substantial majority of the platform's user base while leaving a meaningful
 segment of users who have not completed verification.
 
+/*
+============================================================
+USER & PROFILE ANALYSIS — Q04–Q10
+============================================================
+*/
+
+
+/*
+Q04 — DATA COMPLETENESS: MISSING PROFESSION
+------------------------------------------------------------
+Business objective:
+Measure the extent of missing profession information and
+its impact on the overall user base.
+*/
+
+SELECT
+    COUNT(*) FILTER (WHERE profession IS NULL) AS missing_profession_users,
+    ROUND(
+        COUNT(*) FILTER (WHERE profession IS NULL) * 100.0
+        / COUNT(*),
+        2
+    ) AS missing_profession_pct
+FROM raw_users;
+
+
+/*
+Q05 — PROFESSION DISTRIBUTION
+------------------------------------------------------------
+Business objective:
+Identify the professions with the largest user populations.
+
+Approach:
+Exclude missing profession values, group users by profession,
+and rank professions by user count.
+*/
+
+SELECT
+    profession,
+    COUNT(*) AS user_count
+FROM raw_users
+WHERE profession IS NOT NULL
+GROUP BY profession
+ORDER BY user_count DESC;
+
+
+/*
+Q06 — PROFESSIONS WITH AT LEAST 5,000 USERS
+------------------------------------------------------------
+Business objective:
+Identify professions with significant representation on
+the platform.
+
+Approach:
+Aggregate users by profession and apply a minimum population
+threshold using HAVING.
+*/
+
+SELECT
+    profession,
+    COUNT(*) AS user_count
+FROM raw_users
+WHERE profession IS NOT NULL
+GROUP BY profession
+HAVING COUNT(*) >= 5000
+ORDER BY user_count DESC;
+
+
+/*
+Q07 — OVERALL AGE DISTRIBUTION
+------------------------------------------------------------
+Business objective:
+Understand the overall age profile of the platform.
+
+Metrics:
+- Average age
+- Minimum age
+- Maximum age
+*/
+
+SELECT
+    ROUND(AVG(age), 2) AS average_age,
+    MIN(age) AS minimum_age,
+    MAX(age) AS maximum_age
+FROM raw_users;
+
+
+/*
+Q08 — CITY-LEVEL AGE ANALYSIS
+------------------------------------------------------------
+Business objective:
+Identify cities where the average user age exceeds 30.
+
+Approach:
+Calculate the average age by city and filter the aggregated
+results using HAVING.
+*/
+
+SELECT
+    city,
+    ROUND(AVG(age), 2) AS average_age
+FROM raw_users
+GROUP BY city
+HAVING AVG(age) > 30
+ORDER BY average_age DESC;
+
+
+/*
+Q09 — CITY SCALE & PROFILE COMPLETION
+------------------------------------------------------------
+Business objective:
+Identify large user markets with strong profile completion.
+
+Criteria:
+- More than 30,000 users
+- Average profile completion above 70%
+*/
+
+SELECT
+    city,
+    COUNT(*) AS user_count,
+    ROUND(AVG(profile_completion_pct), 2) AS average_profile_completion
+FROM raw_users
+GROUP BY city
+HAVING COUNT(*) > 30000
+   AND AVG(profile_completion_pct) > 70
+ORDER BY user_count DESC;
+
+
+/*
+Q10 — PROFILE COMPLETION AMONG LARGE CITIES
+------------------------------------------------------------
+Business objective:
+Determine which cities achieve the highest average profile
+completion while maintaining a meaningful user population.
+
+Criteria:
+At least 10,000 users.
+*/
+
+SELECT
+    city,
+    COUNT(*) AS user_count,
+    ROUND(AVG(profile_completion_pct), 2) AS average_profile_completion
+FROM raw_users
+GROUP BY city
+HAVING COUNT(*) >= 10000
+ORDER BY average_profile_completion DESC;
+
