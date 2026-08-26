@@ -583,7 +583,33 @@ It combines:
 **React** for the interactive frontend
 **Power BI** for business intelligence and visualization
 
-The final result is an end-to-end project demonstrating how large-scale application data can move from raw records → validated data → analytical SQL → API → frontend → business intelligence.
-
 All user data is synthetic and the project is intended exclusively for educational and portfolio purposes.
 
+## Full-Stack Development — A Curiosity-Driven Extension
+
+The full-stack component of this project was added as an extension of the core analytics work, driven primarily by curiosity about how a real data-driven web application connects its database, backend, and frontend.
+
+This project is not intended to represent me as a full-stack developer. My primary focus in this project remains:
+
+- SQL
+- PostgreSQL
+- Data transformation
+- Data quality
+- Business analysis
+- Data analytics
+- Power BI
+
+The Node.js, Express, and React components were developed to explore how the analytical database could interact with a functional web application.
+
+Through this extension, I wanted to understand the practical flow of:
+
+```text
+PostgreSQL
+    ↓
+SQL
+    ↓
+Node.js / Express API
+    ↓
+React
+    ↓
+Web Interface
