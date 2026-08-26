@@ -1,0 +1,541 @@
+All the styling for the Matrimony interface
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background: #ffffff;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+/* =========================
+   MAIN APP
+========================= */
+
+.app {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  height: 76px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #5c0b20;
+  color: white;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  transition: opacity 0.2s;
+}
+
+.nav-links a:hover {
+  opacity: 0.75;
+}
+
+.login-button {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 9px 19px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.register-button {
+  background: white;
+  color: #9b1233;
+  border: none;
+  padding: 10px 21px;
+  border-radius: 22px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.login-button:hover,
+.register-button:hover {
+  transform: translateY(-1px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  min-height: 390px;
+  padding: 72px 7% 70px;
+  background: linear-gradient(
+    135deg,
+    #76132f 0%,
+    #a9163d 45%,
+    #e34c6d 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  top: -280px;
+  left: -180px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  right: -220px;
+  bottom: -300px;
+}
+
+.hero-content {
+  max-width: 1000px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-small {
+  margin: 0 0 12px;
+  letter-spacing: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #1f1830;
+}
+
+.hero h1 span {
+  color: #ffffff;
+}
+
+.hero-description {
+  max-width: 760px;
+  margin: 14px auto 30px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: white;
+}
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box {
+  max-width: 920px;
+  margin: 32px auto 0;
+  padding: 19px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  color: #333;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.20);
+}
+
+.search-box label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.search-box select,
+.search-box input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #444;
+  outline: none;
+}
+
+.search-box select:focus,
+.search-box input:focus {
+  border-color: #c52c50;
+  box-shadow: 0 0 0 3px rgba(197, 44, 80, 0.10);
+}
+
+.search-box > input {
+  flex: 1;
+}
+
+.search-button {
+  height: 42px;
+  padding: 0 23px;
+  border: none;
+  border-radius: 9px;
+  background: #9b1233;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.search-button:hover {
+  background: #7f0e2a;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   PROFILES
+========================= */
+
+.profiles-section {
+  padding: 70px 7% 85px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.section-small {
+  margin: 0 0 8px;
+  letter-spacing: 4px;
+  font-size: 12px;
+  color: #7c7c7c;
+  font-weight: bold;
+}
+
+.profiles-section h2 {
+  margin: 0;
+  font-size: 35px;
+  color: #9b1233;
+}
+
+.profile-count {
+  margin: 10px 0 0;
+  color: #777;
+  font-size: 15px;
+}
+
+.profiles-grid {
+  max-width: 1050px;
+  margin: 38px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card {
+  background: white;
+  padding: 28px 24px;
+  border-radius: 17px;
+  box-shadow: 0 7px 25px rgba(92, 11, 32, 0.12);
+  border: 1px solid #f1dce2;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 13px 32px rgba(92, 11, 32, 0.17);
+}
+
+.profile-photo {
+  width: 105px;
+  height: 105px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffe5eb, #ffd1dc);
+  color: #9b1233;
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.profile-photo.large {
+  width: 125px;
+  height: 125px;
+  font-size: 50px;
+}
+
+.profile-card h3 {
+  margin: 8px 0 15px;
+  font-size: 22px;
+  color: #5c0b20;
+}
+
+.profile-card p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.profile-card strong {
+  color: #7b1b37;
+}
+
+.view-profile-button,
+.interest-button,
+.interest-sent-button {
+  border: none;
+  padding: 9px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 13px;
+  font-size: 13px;
+}
+
+.view-profile-button {
+  background: #9b1233;
+  color: white;
+  margin-right: 6px;
+}
+
+.interest-button {
+  background: #ffe2e9;
+  color: #9b1233;
+}
+
+.interest-sent-button {
+  background: #9b1233;
+  color: white;
+}
+
+.view-profile-button:hover,
+.interest-button:hover,
+.interest-sent-button:hover {
+  transform: translateY(-1px);
+}
+
+.no-results {
+  margin-top: 40px;
+  color: #777;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-section {
+  text-align: center;
+  padding: 75px 20px;
+  background: #fff0f3;
+}
+
+.about-section h2 {
+  margin: 0 0 15px;
+  color: #9b1233;
+  font-size: 32px;
+}
+
+.about-section p {
+  max-width: 650px;
+  margin: auto;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* =========================
+   MODALS
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 15, 0.70);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.modal {
+  width: 390px;
+  max-width: 95%;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: #5c0b20;
+}
+
+.modal input {
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  margin: 7px 0;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  outline: none;
+}
+
+.modal input:focus {
+  border-color: #c52c50;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary-button,
+.secondary-button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 22px;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #9b1233;
+  color: white;
+}
+
+.secondary-button {
+  background: #e8edf2;
+  color: #555;
+}
+
+.profile-modal p {
+  margin: 10px 0;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+  .navbar {
+    padding: 15px 5%;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .hero {
+    padding: 60px 5%;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .search-box {
+    flex-wrap: wrap;
+  }
+
+  .search-box label,
+  .search-box > input {
+    min-width: 180px;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    height: auto;
+    flex-direction: column;
+    gap: 15px;
+    padding: 18px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero-description {
+    font-size: 16px;
+  }
+
+  .search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box label,
+  .search-box > input {
+    width: 100%;
+  }
+
+  .profiles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profiles-section h2 {
+    font-size: 29px;
+  }
+}
