@@ -20,6 +20,11 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
+  // Payment popup states
+  const [showPayment, setShowPayment] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [paymentComplete, setPaymentComplete] = useState(false);
+
   // PostgreSQL profiles
   useEffect(() => {
     fetch("http://localhost:5000/api/users")
@@ -110,6 +115,18 @@ function App() {
     setFilteredProfiles(result);
   };
 
+  // PAYMENT
+  const handleChoosePlan = (plan) => {
+    setSelectedPlan(plan);
+    setPaymentComplete(false);
+    setShowPayment(true);
+  };
+
+  const handlePayment = (event) => {
+    event.preventDefault();
+    setPaymentComplete(true);
+  };
+
   return (
     <div style={styles.page}>
 
@@ -168,10 +185,11 @@ function App() {
           {/* SEARCH BOX */}
           <div style={styles.searchBox}>
 
-            <div>
-              <label>Looking for</label>
+            <div style={styles.searchField}>
+              <label style={styles.searchLabel}>Looking for</label>
 
               <select
+                style={styles.searchInput}
                 value={selectedGender}
                 onChange={(e) => setSelectedGender(e.target.value)}
               >
@@ -180,10 +198,11 @@ function App() {
               </select>
             </div>
 
-            <div>
-              <label>Age</label>
+            <div style={styles.searchField}>
+              <label style={styles.searchLabel}>Age</label>
 
               <select
+                style={styles.searchInput}
                 value={selectedAge}
                 onChange={(e) => setSelectedAge(e.target.value)}
               >
@@ -194,10 +213,11 @@ function App() {
               </select>
             </div>
 
-            <div>
-              <label>City</label>
+            <div style={styles.searchField}>
+              <label style={styles.searchLabel}>City</label>
 
               <input
+                style={styles.searchInput}
                 placeholder="Enter city"
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
@@ -248,7 +268,7 @@ function App() {
                   profile.profession ||
                   "Not specified"
                 }
-                emoji="❤️"
+                emoji={getProfessionEmoji(profile.profession)}
               />
             ))}
 
@@ -346,7 +366,10 @@ function App() {
                   {Number(plan.users).toLocaleString("en-IN")} members
                 </p>
 
-                <button style={styles.membershipButton}>
+                <button
+                  style={styles.membershipButton}
+                  onClick={() => handleChoosePlan(plan)}
+                >
                   Choose Plan
                 </button>
 
@@ -512,8 +535,251 @@ function App() {
         </div>
       )}
 
+
+      {/* PAYMENT MODAL */}
+      {showPayment && selectedPlan && (
+        <div style={styles.overlay}>
+
+          <div style={styles.paymentModal}>
+
+            <button
+              style={styles.closeButton}
+              onClick={() => {
+                setShowPayment(false);
+                setPaymentComplete(false);
+              }}
+            >
+              ×
+            </button>
+
+            {!paymentComplete ? (
+              <>
+                <div style={styles.paymentIcon}>
+                  💳
+                </div>
+
+                <h2 style={styles.modalTitle}>
+                  Complete Your Membership
+                </h2>
+
+                <p style={styles.paymentPlan}>
+                  {selectedPlan.membership_plan} Plan
+                </p>
+
+                <div style={styles.paymentPrice}>
+                  ₹{Number(selectedPlan.price).toLocaleString("en-IN")}
+                </div>
+
+                <form onSubmit={handlePayment}>
+
+                  <label style={styles.paymentLabel}>
+                    Card Number
+                  </label>
+
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="1234 5678 9012 3456"
+                    maxLength="19"
+                    style={styles.modalInput}
+                    required
+                  />
+
+                  <div style={styles.paymentRow}>
+
+                    <div style={styles.paymentField}>
+                      <label style={styles.paymentLabel}>
+                        Expiry Date
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="MM / YY"
+                        maxLength="7"
+                        style={styles.modalInput}
+                        required
+                      />
+                    </div>
+
+                    <div style={styles.paymentField}>
+                      <label style={styles.paymentLabel}>
+                        CVV
+                      </label>
+
+                      <input
+                        type="password"
+                        inputMode="numeric"
+                        placeholder="123"
+                        maxLength="4"
+                        style={styles.modalInput}
+                        required
+                      />
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={styles.modalButton}
+                  >
+                    Pay ₹{Number(selectedPlan.price).toLocaleString("en-IN")}
+                  </button>
+
+                </form>
+
+                <p style={styles.demoNotice}>
+                  🔒 Demo payment interface — no real payment is processed.
+                </p>
+
+              </>
+            ) : (
+
+              <div style={styles.successMessage}>
+
+                <div style={styles.successIcon}>
+                  🎉
+                </div>
+
+                <h2 style={styles.modalTitle}>
+                  Payment Successful!
+                </h2>
+
+                <p>
+                  Your {selectedPlan.membership_plan} membership
+                  has been activated.
+                </p>
+
+                <button
+                  style={styles.modalButton}
+                  onClick={() => {
+                    setShowPayment(false);
+                    setPaymentComplete(false);
+                  }}
+                >
+                  Done
+                </button>
+
+              </div>
+
+            )}
+
+          </div>
+
+        </div>
+      )}
+
     </div>
   );
+}
+
+
+/* PROFESSION EMOJI */
+
+function getProfessionEmoji(profession) {
+  const job = String(profession || "").toLowerCase();
+
+  if (
+    job.includes("software engineer") ||
+    job.includes("software developer") ||
+    job.includes("developer") ||
+    job.includes("programmer")
+  ) {
+    return "👩‍💻";
+  }
+
+  if (
+    job.includes("doctor") ||
+    job.includes("physician") ||
+    job.includes("medical") ||
+    job.includes("surgeon")
+  ) {
+    return "👩‍⚕️";
+  }
+
+  if (
+    job.includes("teacher") ||
+    job.includes("professor") ||
+    job.includes("lecturer") ||
+    job.includes("education")
+  ) {
+    return "👩‍🏫";
+  }
+
+  if (
+    job.includes("lawyer") ||
+    job.includes("attorney") ||
+    job.includes("legal")
+  ) {
+    return "⚖️";
+  }
+
+  if (
+    job.includes("chef") ||
+    job.includes("cook") ||
+    job.includes("culinary")
+  ) {
+    return "👩‍🍳";
+  }
+
+  if (
+    job.includes("designer")
+  ) {
+    return "🎨";
+  }
+
+  if (
+    job.includes("architect")
+  ) {
+    return "🏗️";
+  }
+
+  if (
+    job.includes("student")
+  ) {
+    return "🎓";
+  }
+
+  if (
+    job.includes("business manager") ||
+    job.includes("business") ||
+    job.includes("manager")
+  ) {
+    return "💼";
+  }
+
+  if (
+    job.includes("nurse") ||
+    job.includes("nursing")
+  ) {
+    return "🩺";
+  }
+
+  if (
+    job.includes("engineer")
+  ) {
+    return "👷";
+  }
+
+  if (
+    job.includes("artist")
+  ) {
+    return "🎨";
+  }
+
+  if (
+    job.includes("pilot") ||
+    job.includes("aviation")
+  ) {
+    return "✈️";
+  }
+
+  if (
+    job.includes("photographer")
+  ) {
+    return "📸";
+  }
+
+  return "😊";
 }
 
 
@@ -632,25 +898,58 @@ const styles = {
     lineHeight: "1.6"
   },
 
+  /* SEARCH BOX */
+
   searchBox: {
     background: "white",
-    padding: "20px",
+    padding: "18px",
     borderRadius: "15px",
     marginTop: "40px",
     display: "flex",
-    gap: "15px",
-    alignItems: "end",
+    gap: "12px",
+    alignItems: "flex-end",
     color: "#333",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+    boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+    maxWidth: "780px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    boxSizing: "border-box"
+  },
+
+  searchField: {
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px"
+  },
+
+  searchLabel: {
+    fontSize: "13px",
+    fontWeight: "bold",
+    textAlign: "left"
+  },
+
+  searchInput: {
+    width: "100%",
+    height: "42px",
+    padding: "0 10px",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    boxSizing: "border-box",
+    background: "white",
+    color: "#333"
   },
 
   searchButton: {
     background: "#9b1233",
     color: "white",
     border: "none",
-    padding: "13px 25px",
+    height: "42px",
+    padding: "0 20px",
     borderRadius: "8px",
-    cursor: "pointer"
+    cursor: "pointer",
+    whiteSpace: "nowrap"
   },
 
   matches: {
@@ -827,6 +1126,76 @@ const styles = {
     borderRadius: "18px",
     boxShadow: "0 15px 40px rgba(0,0,0,0.25)",
     textAlign: "center"
+  },
+
+  /* PAYMENT */
+
+  paymentModal: {
+    position: "relative",
+    width: "430px",
+    maxWidth: "90%",
+    background: "white",
+    padding: "35px",
+    borderRadius: "18px",
+    boxShadow: "0 15px 40px rgba(0,0,0,0.25)",
+    textAlign: "center",
+    boxSizing: "border-box"
+  },
+
+  paymentIcon: {
+    fontSize: "45px",
+    marginBottom: "5px"
+  },
+
+  paymentPlan: {
+    color: "#9b1233",
+    fontSize: "18px",
+    fontWeight: "bold",
+    marginBottom: "5px"
+  },
+
+  paymentPrice: {
+    fontSize: "26px",
+    fontWeight: "bold",
+    color: "#26354a",
+    marginTop: "5px",
+    marginBottom: "20px"
+  },
+
+  paymentLabel: {
+    display: "block",
+    textAlign: "left",
+    fontSize: "13px",
+    fontWeight: "bold",
+    color: "#555",
+    marginTop: "10px",
+    marginBottom: "5px"
+  },
+
+  paymentRow: {
+    display: "flex",
+    gap: "12px"
+  },
+
+  paymentField: {
+    flex: 1,
+    minWidth: 0
+  },
+
+  demoNotice: {
+    fontSize: "12px",
+    color: "#888",
+    marginTop: "18px",
+    lineHeight: "1.5"
+  },
+
+  successMessage: {
+    padding: "20px 5px"
+  },
+
+  successIcon: {
+    fontSize: "55px",
+    marginBottom: "10px"
   },
 
   modalTitle: {
