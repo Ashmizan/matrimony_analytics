@@ -1,5 +1,3 @@
-My actual matrimony frontend
-
 import { useEffect, useState } from "react";
 
 function App() {
