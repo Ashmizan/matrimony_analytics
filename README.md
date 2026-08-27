@@ -537,40 +537,6 @@ The matrimonial-platform domain provides an engaging and feature-rich environmen
 
 ---
 
-# Transferable Skills Demonstrated
-
-The project demonstrates skills relevant to:
-
-* Data Analytics
-* SQL Analytics
-* PostgreSQL
-* Data Cleaning
-* ETL / Data Transformation
-* Relational Data Modeling
-* Business Intelligence
-* Power BI
-* Backend API Development
-* Node.js
-* Express.js
-* React
-* REST APIs
-* Data-driven UI development
-* Analytical Problem Solving
-
-These skills can be applied across industries including:
-
-* Hospitality
-* E-commerce
-* SaaS
-* FinTech
-* Marketplaces
-* Subscription businesses
-* Consumer applications
-* Travel
-* Other data-driven organizations
-
----
-
 # Final Project Summary
 
 This project brings together a complete analytical and application workflow around a synthetic 500,000-user matrimonial platform.
